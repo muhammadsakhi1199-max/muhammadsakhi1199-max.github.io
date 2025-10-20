@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMK ISLAM MALAHAYATI TKJ: Siap Kerja, Siap Berkarya di Dunia Digital</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles and configuration for Tailwind */
+        :root {
+            /* Define brand colors: Emerald (for tech/growth) and Blue (for professionalism/trust) */
+            --primary-color: #10B981; /* Emerald Green */
+            --secondary-color: #1D4ED8; /* Blue */
+            --background-color: #F9FAFB; /* Light Gray */
+        }
+        .container {
+            max-width: 1280px;
+        }
+        /* Custom text shadow for better readability on hero image */
+        .text-shadow-custom {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': 'var(--primary-color)',
+                        'secondary': 'var(--secondary-color)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-50">
+
+    <!-- Navbar (Sticky for better navigation experience) -->
+    <header class="sticky top-0 z-50 bg-white shadow-lg">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo & School Name -->
+            <a href="#" class="flex items-center space-x-3">
+                <div class="text-3xl font-extrabold text-primary">S<span class="text-secondary">U</span></div>
+                <span class="text-xl font-bold text-gray-900 hidden md:block">SMK Unggulan TKJ</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-button" class="lg:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary">
+                <!-- Hamburger Icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex space-x-6">
+                <a href="#beranda" class="text-gray-600 hover:text-primary font-medium transition duration-150">Beranda</a>
+                <a href="#tentang" class="text-gray-600 hover:text-primary font-medium transition duration-150">Tentang TKJ</a>
+                <a href="#program" class="text-gray-600 hover:text-primary font-medium transition duration-150">Kompetensi</a>
+                <a href="#berita" class="text-gray-600 hover:text-primary font-medium transition duration-150">Aktivitas</a>
+                <a href="#kontak" class="text-white bg-secondary px-4 py-2 rounded-full hover:bg-blue-700 transition duration-150 shadow-md">Daftar Sekarang</a>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default, toggled by JS) -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-inner pb-4">
+            <a href="#beranda" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Beranda</a>
+            <a href="#tentang" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang TKJ</a>
+            <a href="#program" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kompetensi</a>
+            <a href="#berita" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Aktivitas</a>
+            <a href="#kontak" class="block px-4 py-2 text-white bg-primary mx-4 mt-2 rounded-lg text-center hover:bg-emerald-600">Daftar Sekarang</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Hero Section: High Impact Visual -->
+        <section id="beranda" class="relative h-screen flex items-center justify-center text-center bg-gray-900 overflow-hidden">
+            <!-- Background Image Placeholder (Thematic to TKJ/IT) -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/059669/ffffff/blur(10)+text=SMK%20TKJ%20Siap%20Kerja');">
+                <div class="absolute inset-0 bg-gray-900 opacity-60"></div>
+            </div>
+            
+
+            <div class="relative z-10 p-6 md:p-12 max-w-4xl">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight text-shadow-custom">
+                    Mencetak Teknisi Jaringan Profesional dan Siap Bersaing di Industri 4.0
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-8 text-shadow-custom">
+                    Fokus pada praktik intensif, sertifikasi kompetensi, dan *link & match* dengan perusahaan teknologi terkemuka.
+                </p>
+                <div class="space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#program" class="inline-block px-8 py-3 text-lg font-semibold text-gray-900 bg-primary rounded-full hover:bg-emerald-400 transition duration-300 shadow-xl transform hover:scale-105">
+                        Lihat Bidang Kompetensi
+                    </a>
+                    <a href="#kontak" class="inline-block px-8 py-3 text-lg font-semibold text-white border-2 border-white rounded-full hover:bg-white hover:text-gray-900 transition duration-300 transform hover:scale-105">
+                        Hubungi Tim Pendaftaran
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Featured Stats (Relevant to Vocational School/TKJ) -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="p-4 rounded-xl shadow-lg bg-primary/10">
+                        <p class="text-4xl font-extrabold text-primary">90%</p>
+                        <p class="text-gray-600 mt-1">Tersalurkan ke Dunia Kerja & Industri</p>
+                    </div>
+                    <div class="p-4 rounded-xl shadow-lg bg-secondary/10">
+                        <p class="text-4xl font-extrabold text-secondary">5+</p>
+                        <p class="text-gray-600 mt-1">Jenis Sertifikasi Kompetensi (BNSP, Mikrotik, Cisco)</p>
+                    </div>
+                    <div class="p-4 rounded-xl shadow-lg bg-primary/10">
+                        <p class="text-4xl font-extrabold text-primary">15K+</p>
+                        <p class="text-gray-600 mt-1">Jam Praktik Kerja Lapangan (PKL)</p>
+                    </div>
+                    <div class="p-4 rounded-xl shadow-lg bg-secondary/10">
+                        <p class="text-4xl font-extrabold text-secondary">A++</p>
+                        <p class="text-gray-600 mt-1">Akreditasi Jurusan TKJ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. About Us / Vision & Mission -->
+        <section id="tentang" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-12 items-center">
+                <!-- Image Placeholder: Lab activity -->
+                <div class="lg:w-1/2">
+                    <img class="w-full h-80 object-cover rounded-3xl shadow-2xl transform transition duration-500 hover:scale-[1.02]" 
+                         src="https://placehold.co/600x400/1D4ED8/ffffff?text=Lab+Jaringan+SMK" 
+                         alt="[Gambar Lab Komputer dan Jaringan]">
+                </div>
+                <!-- Content -->
+                <div class="lg:w-1/2">
+                    <span class="text-sm font-semibold text-primary uppercase tracking-wider">Tentang Jurusan Kami</span>
+                    <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-6">Membentuk Tenaga Ahli Digital yang Kompeten</h2>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Jurusan Teknik Komputer dan Jaringan (TKJ) SMK Unggulan berkomitmen menghasilkan lulusan yang siap langsung bekerja sebagai *network engineer*, *administrator server*, maupun spesialis keamanan siber. Kurikulum kami diselaraskan dengan kebutuhan industri terkini.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-3">
+                            <!-- Icon (Pencil) -->
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            <span class="text-gray-800 font-medium">Kurikulum Berbasis Industri 4.0</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <!-- Icon (Circle Check) -->
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="text-gray-800 font-medium">Sertifikasi Kompetensi BNSP</span>
+                        </div>
+                    </div>
+                    <a href="#" class="mt-8 inline-block text-secondary hover:text-blue-700 font-semibold border-b-2 border-secondary hover:border-blue-700 transition duration-300">
+                        Lihat Lebih Jauh Profil Lulusan &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Featured Programs (TKJ SPECIALIZATIONS) -->
+        <section id="program" class="py-20 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <span class="text-sm font-semibold text-secondary uppercase tracking-wider">Kompetensi Keahlian</span>
+                <h2 class="text-4xl font-bold text-gray-900 mt-2 mb-12">Fokus Program TKJ</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1: Network Engineering -->
+                    <div class="bg-gray-50 rounded-xl shadow-xl p-8 transform transition duration-500 hover:shadow-2xl hover:scale-105 border-t-4 border-primary">
+                        <!-- Icon (Wifi/Network) -->
+                        <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9v3M3 12a9 9 0 019 9m-9-9v3m12-3a9 9 0 00-9-9m-9 9a9 9 0 019-9m0 18v-3m0-12v3M9 3v3m6-3v3M3 15h2m16 0h2m-6 6v-2m-6 2v-2"></path></svg>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">Teknik Jaringan Komputer</h3>
+                        <p class="text-gray-600">Mempelajari instalasi, konfigurasi, dan pemeliharaan jaringan skala kecil hingga enterprise (didukung kurikulum Cisco/Mikrotik). Lulusan siap menjadi *Network Administrator*.</p>
+                        <a href="#" class="mt-4 inline-block text-primary font-medium hover:underline">Detail Modul &rarr;</a>
+                    </div>
+                    
+                    <!-- Card 2: Cybersecurity -->
+                    <div class="bg-gray-50 rounded-xl shadow-xl p-8 transform transition duration-500 hover:shadow-2xl hover:scale-105 border-t-4 border-secondary">
+                        <!-- Icon (Lock/Security) -->
+                        <svg class="w-12 h-12 text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm0-6h12v-1a2 2 0 00-2-2H8a2 2 0 00-2 2v1zM9 10a3 3 0 116 0V7a3 3 0 11-6 0v3z"></path></svg>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">Cyber Security & Forensics</h3>
+                        <p class="text-gray-600">Fokus pada keamanan sistem, deteksi ancaman, dan pemulihan data untuk melindungi infrastruktur digital perusahaan. Lulusan siap menjadi *Junior Security Analyst*.</p>
+                        <a href="#" class="mt-4 inline-block text-secondary font-medium hover:underline">Detail Modul &rarr;</a>
+                    </div>
+
+                    <!-- Card 3: Cloud & Server Admin -->
+                    <div class="bg-gray-50 rounded-xl shadow-xl p-8 transform transition duration-500 hover:shadow-2xl hover:scale-105 border-t-4 border-primary">
+                        <!-- Icon (Cloud/Server) -->
+                        <svg class="w-12 h-12 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 005-5v-1a4 4 0 00-4-4h-7.653A5.955 5.955 0 0112 5a6 6 0 00-6 6v1a4 4 0 00-4 4z"></path></svg>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">Administrasi Sistem & Cloud</h3>
+                        <p class="text-gray-600">Menguasai instalasi dan pengelolaan sistem operasi server (Linux/Windows) dan platform cloud dasar. Lulusan siap menjadi *System Support* atau *Data Center Operator*.</p>
+                        <a href="#" class="mt-4 inline-block text-primary font-medium hover:underline">Detail Modul &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. News & Events (TKJ Achievements) -->
+        <section id="berita" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <span class="text-sm font-semibold text-primary uppercase tracking-wider">Aktivitas Terkini</span>
+                    <h2 class="text-4xl font-bold text-gray-900 mt-2">Berita & Prestasi TKJ</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- News Item 1: Competition Win -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                        <img class="w-full h-48 object-cover" 
+                             src="https://placehold.co/400x300/10B981/ffffff?text=Lomba%20Jaringan" 
+                             alt="[Gambar Siswa Juara Lomba Jaringan]">
+                        <div class="p-6">
+                            <p class="text-sm text-secondary font-medium mb-2">20 Oktober 2025 | Prestasi</p>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-primary transition">Tim TKJ Juara 1 Lomba Konfigurasi Jaringan Tingkat Provinsi!</h3>
+                            <p class="text-gray-600 text-sm">Siswa kami membuktikan keahliannya dalam mengkonfigurasi jaringan kompleks dan meraih emas.</p>
+                        </div>
+                    </div>
+
+                    <!-- News Item 2: Industry Visit -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                        <img class="w-full h-48 object-cover" 
+                             src="https://placehold.co/400x300/1D4ED8/ffffff?text=Kunjungan%20Industri" 
+                             alt="[Gambar Kunjungan Industri Data Center]">
+                        <div class="p-6">
+                            <p class="text-sm text-primary font-medium mb-2">15 Oktober 2025 | Kunjungan</p>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-secondary transition">Kunjungan Industri ke Data Center Perusahaan Multinasional</h3>
+                            <p class="text-gray-600 text-sm">Pengalaman langsung siswa melihat operasional pusat data skala besar dan infrastruktur server.</p>
+                        </div>
+                    </div>
+
+                    <!-- News Item 3: Workshop/Event -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                        <img class="w-full h-48 object-cover" 
+                             src="https://placehold.co/400x300/6B7280/ffffff?text=Workshop%20Server" 
+                             alt="[Gambar Workshop Server Linux]">
+                        <div class="p-6">
+                            <p class="text-sm text-secondary font-medium mb-2">10 Oktober 2025 | Workshop</p>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-primary transition">Workshop Gratis: Pengantar Dasar Server Linux untuk Pemula</h3>
+                            <p class="text-gray-600 text-sm">Kegiatan berbagi ilmu yang terbuka untuk siswa dan komunitas IT sekitar.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="#" class="inline-block px-6 py-3 text-lg font-semibold text-white bg-secondary rounded-full hover:bg-blue-700 transition duration-300 shadow-lg">
+                        Lihat Semua Aktivitas
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. Call to Action / Registration -->
+        <section id="kontak" class="py-20 bg-primary">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-extrabold text-white mb-4">Siap Jadi Tenaga Ahli Digital?</h2>
+                <p class="text-lg text-white mb-8 max-w-2xl mx-auto">
+                    Pendaftaran Jurusan TKJ tahun ajaran baru telah dibuka. Wujudkan karir IT Anda bersama SMK Unggulan!
+                </p>
+                <a href="#" class="inline-block px-10 py-4 text-xl font-bold text-primary bg-white rounded-full hover:bg-gray-200 transition duration-300 shadow-2xl transform hover:scale-105">
+                    DAFTAR SEKARANG
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-10">
+            <!-- Col 1: School Info -->
+            <div>
+                <h3 class="text-2xl font-bold text-primary mb-4">SMK Unggulan TKJ</h3>
+                <p class="text-gray-400 text-sm">
+                    Jl. Pendidikan No. 10, Kota Sukses, Indonesia.<br>
+                    Kode Pos: 12345
+                </p>
+            </div>
+
+            <!-- Col 2: Quick Links -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b-2 border-primary pb-1">Navigasi</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#beranda" class="text-gray-400 hover:text-white transition">Beranda</a></li>
+                    <li><a href="#tentang" class="text-gray-400 hover:text-white transition">Tentang TKJ</a></li>
+                    <li><a href="#program" class="text-gray-400 hover:text-white transition">Kompetensi</a></li>
+                    <li><a href="#berita" class="text-gray-400 hover:text-white transition">Galeri</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Contact -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b-2 border-primary pb-1">Hubungi Kami</h4>
+                <ul class="space-y-2 text-sm">
+                    <li class="text-gray-400">Telepon: (021) 1234-5678</li>
+                    <li class="text-gray-400">Email: info@smktkjunggulan.sch.id</li>
+                    <li class="text-gray-400">Jam Praktik: 08:00 - 16:00 WIB</li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Social Media -->
+            <div>
+                <h4 class="text-lg font-semibold mb-4 border-b-2 border-primary pb-1">Ikuti Kami</h4>
+                <div class="flex space-x-4">
+                    <!-- Social Icons Placeholder -->
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 hover:bg-primary flex items-center justify-center transition">F</a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 hover:bg-primary flex items-center justify-center transition">I</a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-700 hover:bg-primary flex items-center justify-center transition">Y</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+            &copy; 2025 SMK Unggulan TKJ. Hak Cipta Dilindungi Undang-Undang.
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuButton.addEventListener('click', () => {
+            // Toggle the visibility of the mobile menu
+            mobileMenu.classList.toggle('hidden');
+            // Change button icon from hamburger to close (optional visual feedback)
+            const iconPath = menuButton.querySelector('svg path');
+            if (mobileMenu.classList.contains('hidden')) {
+                // If hidden, show hamburger icon
+                iconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            } else {
+                // If visible, show close icon
+                iconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        });
+
+        // Hide mobile menu when a link is clicked (for better UX)
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuButton.querySelector('svg path').setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            });
+        });
+    </script>
+</body>
+</html>
