@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tangkap Bintang!</title>
+    <style>
+        /* Menggunakan font Inter dari CDN untuk estetika */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e; /* Biru gelap */
+            --paddle-color: #00bcd4; /* Cyan terang */
+            --star-color: #ffc107; /* Emas */
+            --bomb-color: #e91e63; /* Merah muda/magenta */
+            --text-color: #ffffff;
+            --score-color: #4caf50; /* Hijau */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0e17; /* Latar belakang lebih gelap */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            box-sizing: border-box;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 600px; /* Batasan lebar untuk desktop */
+            background: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--score-color);
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        #gameCanvas {
+            background-color: #0d0d18;
+            border: 4px solid var(--paddle-color);
+            border-radius: 8px;
+            touch-action: none; /* Penting untuk interaksi sentuhan */
+            width: 100%;
+            height: 350px; /* Tinggi tetap untuk estetika */
+        }
+
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #2c2c47;
+            border-radius: 8px;
+        }
+
+        #score, #lives {
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        #score {
+            color: var(--star-color);
+        }
+
+        #lives {
+            color: var(--bomb-color);
+        }
+
+        .message-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .message-content {
+            background: #3a3a5a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .message-content h2 {
+            color: var(--bomb-color);
+            font-size: 2.5rem;
+            margin-top: 0;
+        }
+
+        .message-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: var(--score-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: #4CAF50; /* sedikit lebih terang */
+            transform: translateY(-1px);
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 15px;
+            }
+            #gameCanvas {
+                height: 300px;
+            }
+            .info-panel {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <h1>Tangkap Bintang! ✨</h1>
+    <div class="info-panel">
+        <div id="score">Skor: 0</div>
+        <div id="lives">Nyawa: 3</div>
+    </div>
+    <!-- Canvas untuk menggambar game -->
+    <canvas id="gameCanvas"></canvas>
+</div>
+
+<!-- Kotak Pesan Game Over/Mulai -->
+<div class="message-box" id="messageBox">
+    <div class="message-content">
+        <h2 id="messageTitle">Game Over!</h2>
+        <p id="messageBody">Skor Akhir Anda: <span id="finalScore">0</span></p>
+        <button class="btn" onclick="startGame()">Mulai Ulang</button>
+    </div>
+</div>
+
+<script>
+    // Inisialisasi Canvas
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Elemen UI
+    const scoreDisplay = document.getElementById('score');
+    const livesDisplay = document.getElementById('lives');
+    const messageBox = document.getElementById('messageBox');
+    const messageTitle = document.getElementById('messageTitle');
+    const finalScoreDisplay = document.getElementById('finalScore');
+
+    // Variabel Game
+    let score = 0;
+    let lives = 3;
+    let isGameOver = true;
+    let gameLoopId;
+    
+    const itemTypes = {
+        STAR: 'star',
+        BOMB: 'bomb'
+    };
+
+    // Objek Player (Paddle)
+    let paddle = {
+        width: 100,
+        height: 15,
+        x: 0,
+        y: 0, // Akan dihitung di resetCanvas
+        speed: 0
+    };
+
+    // Array untuk objek jatuh (bintang/bom)
+    let fallingItems = [];
+
+    // Konfigurasi Item Jatuh
+    const itemSize = 25;
+    let spawnRate = 100; // Frekuensi spawn (semakin kecil semakin sering)
+    let frameCount = 0;
+    let baseSpeed = 2; // Kecepatan dasar item jatuh
+
+    // --- Fungsi Bantuan ---
+
+    // Menghitung ulang dimensi canvas dan posisi paddle
+    function resetCanvas() {
+        // Atur ukuran canvas agar sesuai dengan kontainernya (responsif)
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+
+        // Atur posisi awal paddle di tengah bawah
+        paddle.x = (canvas.width / 2) - (paddle.width / 2);
+        paddle.y = canvas.height - paddle.height - 10; // 10px dari bawah
+    }
+    
+    // Handle input (Mouse dan Sentuhan)
+    function handleInput(e) {
+        if (isGameOver) return;
+        
+        let clientX;
+        
+        if (e.touches && e.touches.length > 0) {
+            // Untuk sentuhan
+            clientX = e.touches[0].clientX;
+        } else {
+            // Untuk mouse
+            clientX = e.clientX;
+        }
+
+        // Hitung posisi mouse/sentuhan relatif terhadap canvas
+        const rect = canvas.getBoundingClientRect();
+        let targetX = clientX - rect.left;
+
+        // Batasi pergerakan paddle dalam batas canvas
+        let newX = targetX - paddle.width / 2;
+        
+        // Pastikan tidak melebihi batas kiri dan kanan
+        if (newX < 0) {
+            paddle.x = 0;
+        } else if (newX + paddle.width > canvas.width) {
+            paddle.x = canvas.width - paddle.width;
+        } else {
+            paddle.x = newX;
+        }
+    }
+
+    // --- Logika Game ---
+
+    function createItem() {
+        const type = Math.random() < 0.7 ? itemTypes.STAR : itemTypes.BOMB; // 70% Bintang, 30% Bom
+        const x = Math.random() * (canvas.width - itemSize);
+        let speed = baseSpeed + (score / 100) * 0.5; // Kecepatan meningkat seiring skor
+        speed = Math.min(speed, 6); // Batas kecepatan maksimum
+
+        fallingItems.push({
+            type: type,
+            x: x,
+            y: 0,
+            size: itemSize,
+            speed: speed
+        });
+    }
+
+    function updateGame() {
+        // Perbarui posisi item jatuh
+        fallingItems.forEach(item => {
+            item.y += item.speed;
+        });
+
+        // Hapus item yang keluar dari batas bawah
+        fallingItems = fallingItems.filter(item => {
+            // Cek jika item melewati batas bawah
+            if (item.y > canvas.height) {
+                // Jika bintang lolos, kurangi nyawa
+                if (item.type === itemTypes.STAR) {
+                    lives--;
+                    updateUI();
+                    if (lives <= 0) {
+                        endGame(false);
+                    }
+                }
+                return false; // Hapus item
+            }
+            return true;
+        });
+        
+        // Cek tabrakan
+        checkCollisions();
+
+        // Logika Spawn Item
+        frameCount++;
+        // Spawn rate semakin cepat seiring skor
+        let currentSpawnRate = Math.max(20, spawnRate - Math.floor(score / 50) * 10);
+
+        if (frameCount % currentSpawnRate === 0) {
+            createItem();
+            frameCount = 0; // Reset frameCount
+        }
+    }
+
+    function checkCollisions() {
+        for (let i = fallingItems.length - 1; i >= 0; i--) {
+            const item = fallingItems[i];
+
+            // Cek tabrakan antara item dan paddle
+            if (
+                item.x < paddle.x + paddle.width &&
+                item.x + item.size > paddle.x &&
+                item.y + item.size > paddle.y &&
+                item.y < paddle.y + paddle.height
+            ) {
+                // Tabrakan terjadi!
+                if (item.type === itemTypes.STAR) {
+                    score += 10;
+                    // Tingkatkan kecepatan paddle sedikit untuk tantangan
+                    paddle.width = Math.max(50, paddle.width - 1); 
+                } else { // BOMB
+                    lives--;
+                    // Kecilkan paddle sebagai hukuman
+                    paddle.width = Math.max(50, paddle.width - 15);
+                    if (lives <= 0) {
+                        endGame(false);
+                    }
+                }
+                
+                updateUI();
+                fallingItems.splice(i, 1); // Hapus item yang bertabrakan
+            }
+        }
+    }
+
+    // --- Fungsi Gambar (Render) ---
+
+    function drawPaddle() {
+        ctx.fillStyle = varToRgba(getComputedStyle(document.body).getPropertyValue('--paddle-color'));
+        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+        // Tambahkan efek cahaya
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = varToRgba(getComputedStyle(document.body).getPropertyValue('--paddle-color'));
+        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+        ctx.shadowBlur = 0; // Reset shadow
+    }
+
+    function drawItem(item) {
+        ctx.font = `${item.size}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        let emoji = '';
+        if (item.type === itemTypes.STAR) {
+            emoji = '⭐️'; // Emoji bintang
+        } else {
+            emoji = '💣'; // Emoji bom
+        }
+
+        // Gambar emoji di tengah koordinat item
+        ctx.fillText(emoji, item.x + item.size / 2, item.y + item.size / 2);
+    }
+
+    function drawGame() {
+        // Bersihkan canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Gambar latar belakang dengan warna yang lebih gelap dari kontainer
+        ctx.fillStyle = '#0d0d18';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Gambar semua item jatuh
+        fallingItems.forEach(drawItem);
+
+        // Gambar paddle
+        drawPaddle();
+    }
+    
+    // Fungsi utilitas untuk mendapatkan warna CSS
+    function varToRgba(cssVar) {
+        // Fungsi ini sederhana, asumsikan input adalah warna hex atau nama warna
+        // atau gunakan kembali variabel CSS murni jika browser mendukung
+        return cssVar.trim(); 
+    }
+
+    // --- Kontrol Game dan UI ---
+
+    function gameLoop() {
+        if (!isGameOver) {
+            updateGame();
+            drawGame();
+            gameLoopId = requestAnimationFrame(gameLoop);
+        }
+    }
+
+    function updateUI() {
+        scoreDisplay.textContent = `Skor: ${score}`;
+        // Ganti nyawa dengan emoji hati
+        livesDisplay.textContent = `Nyawa: ${'❤️'.repeat(lives)}`;
+    }
+
+    function endGame(isWin) {
+        isGameOver = true;
+        cancelAnimationFrame(gameLoopId);
+        
+        if (!isWin) {
+            messageTitle.textContent = "Game Over! 😭";
+            finalScoreDisplay.textContent = score;
+        } else {
+            messageTitle.textContent = "Anda Menang! 🎉";
+            finalScoreDisplay.textContent = score;
+        }
+        
+        // Tampilkan kotak pesan
+        messageBox.style.display = 'flex';
+    }
+    
+    function startGame() {
+        // Reset variabel
+        score = 0;
+        lives = 3;
+        isGameOver = false;
+        fallingItems = [];
+        frameCount = 0;
+        paddle.width = 100; // Reset lebar paddle
+
+        resetCanvas();
+        updateUI();
+
+        // Sembunyikan kotak pesan
+        messageBox.style.display = 'none';
+
+        // Mulai loop game
+        gameLoopId = requestAnimationFrame(gameLoop);
+    }
+
+    // --- Inisialisasi Event Listener ---
+    
+    // Mouse movement
+    canvas.addEventListener('mousemove', handleInput);
+    // Touch movement (untuk perangkat mobile)
+    canvas.addEventListener('touchmove', handleInput, { passive: false });
+    
+    // Cegah scrolling saat menyentuh canvas
+    canvas.addEventListener('touchstart', (e) => {
+        if (!isGameOver) e.preventDefault();
+    }, { passive: false });
+
+    // Responsif: Atur ulang canvas saat jendela diubah ukurannya
+    window.addEventListener('resize', resetCanvas);
+
+    // Tampilkan kotak pesan awal (siap untuk mulai)
+    window.onload = function() {
+        resetCanvas();
+        messageTitle.textContent = "Selamat Datang!";
+        messageBody.innerHTML = "Tangkap bintang (⭐️) untuk mendapatkan skor, tapi hindari bom (💣)!<br>Gunakan mouse atau sentuhan untuk menggerakkan paddle.<br>Skor Akhir: <span id='finalScore'>0</span>";
+        messageBox.style.display = 'flex';
+    };
+    
+</script>
+
+</body>
+</html>
